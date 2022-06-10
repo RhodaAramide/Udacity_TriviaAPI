@@ -211,29 +211,30 @@ def create_app(test_config=None):
     one question at a time is displayed, the user is allowed to answer
     and shown whether they were correct or not.
     """
-    @app.route("/quizzes", methods=['POST'])
+    @app.route('/quizzes', methods=['POST'])
     def get_quiz():
         body = request.get_json()
-        try:          
-           if body:
-                previous_questions = body["previous_questions"]
+        try:
+            if body:
+                
                 quiz_category = body["quiz_category"]
+                previous_questions = body["previous_questions"]
                 
                 if quiz_category:
                     questions = Question.query.filter_by(category=quiz_category).filter(~Question.id.in_(
-                        previous_questions)).order_by(random()).all()
+                         previous_questions)).order_by(random()).all()
                 else:
                     questions = Question.query.filter(~Question.id.in_(
-                        previous_questions)).order_by(random()).all()    
+                         previous_questions)).order_by(random()).all()    
                 if len(questions) > 0:
-                    question_dict = {obj.format() for obj in questions}                     
+                    question_dict = {question.format() for question in questions}                     
                 else:
                     question_dict = None
                     
                 return jsonify({
-                    'success': True,
-                    'question': question_dict                   
-                })
+                     'success': True,
+                     'question': question_dict                   
+                 })
         except:
             abort(400)           
         
@@ -261,11 +262,17 @@ def create_app(test_config=None):
         return jsonify({"success": False, "error": 400, "message": "bad request"}), 400
 
     @app.errorhandler(405)
-    def not_found(error):
+    def not_allowed(error):
         return (
             jsonify({"success": False, "error": 405, "message": "method not allowed"}),
             405,
         )
-
+        
+    @app.errorhandler(500)
+    def server_error(error):
+        return (
+            jsonify({"success": False, "error": 500, "message": "internal server error"}),
+            500,
+        )
     return app
 

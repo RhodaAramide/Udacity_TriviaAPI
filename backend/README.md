@@ -16,6 +16,7 @@ The API will return three error types when requests fail:
 404: Resource Not Found
 405: Method Not Allowed
 422: Not Processable
+500: Internal server error
 
 Endpoints
 GET /categories
