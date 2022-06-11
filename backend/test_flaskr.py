@@ -115,7 +115,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data["success"], False)
         self.assertEqual(data["message"], "unprocessable")
     
-    def test_category_by_question(self):
+    def test_question_by_category(self):
         res = self.client().get("/categories/1/questions")
         data = json.loads(res.data)
         
@@ -124,7 +124,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertTrue(data["questions"])
         self.assertTrue(data["total_questions"])
     
-    def test_category_by_question(self):
+    def test_404_question_by_category(self):
         res = self.client().get("/categories/100/questions")
         data = json.loads(res.data)
         
@@ -141,7 +141,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertTrue(data["question"])
         
     
-    def test_quiz(self):
+    def test_400_quiz(self):
         res = self.client().post("/quizzes")
         data = json.loads(res.data)
         

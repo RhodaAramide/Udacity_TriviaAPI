@@ -227,7 +227,9 @@ def create_app(test_config=None):
                     questions = Question.query.filter(~Question.id.in_(
                          previous_questions)).order_by(random()).all()    
                 if len(questions) > 0:
-                    question_dict = {question.format() for question in questions}                     
+                    for question in questions:
+                        question_dict = question.format()
+                    #question_dict = {question.format() for question in questions}                     
                 else:
                     question_dict = None
                     
