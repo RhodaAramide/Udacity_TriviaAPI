@@ -17,8 +17,7 @@ class TriviaTestCase(unittest.TestCase):
         self.app = create_app()
         self.app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_PATH")
         self.client = self.app.test_client
-        # self.database_path = os.environ.get("DATABASE_PATH")
-        
+        # self.database_path = os.environ.get("DATABASE_PATH")        
         # setup_db(self.app, self.database_path)
 
         # binds the app to the current context
@@ -34,8 +33,7 @@ class TriviaTestCase(unittest.TestCase):
         pass
 
     """
-    TODO
-    Write at least one test for each test for successful operation and for expected errors.
+    Test for each test for successful operation and for expected errors.
     """
     def test_get_categories(self):
         res = self.client().get("/categories")
